@@ -24,6 +24,8 @@ Hands:
 
 */
 
+vector<string> createDeck(vector<string> deck);
+
 int main()
 {
 vector<string> playerHand;
@@ -31,6 +33,21 @@ vector<string> opponentHand;
 vector<string> deck;
 playerHand.resize(5);
 opponentHand.resize(5);
+deck = createDeck(deck);
+
+for(int index = 0; index < deck.size(); index++)
+{
+cout<<deck[index]<<endl;
+}
+
+return 0;
+}
+
+
+
+
+vector<string> createDeck(vector<string> deck)
+{
 deck.push_back("Ace of Spades");//0
 deck.push_back("2 of Spades");//1
 deck.push_back("3 of Spades");//2
@@ -83,12 +100,5 @@ deck.push_back("10 of Clubs");//48
 deck.push_back("Jack of Clubs");//49
 deck.push_back("Queen of Clubs");//50
 deck.push_back("King of Clubs");//51
-
-
-for(int index = 0; index <= 25; index++)
-{
-    cout<<deck[index]<<endl;
-}
-
-return 0;
+return deck;
 }
