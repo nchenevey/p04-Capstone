@@ -28,23 +28,42 @@ vector<string> createDeck(vector<string> deck);
 
 int main()
 {
-vector<string> playerHand;
-vector<string> opponentHand;
-vector<string> deck;
-playerHand.resize(5);
-opponentHand.resize(5);
-deck = createDeck(deck);
+    srand( time(NULL) );
+    int randomNumber1;
+    int randomNumber2;
+    int randomNumber3;
+    int randomNumber4;
+    int randomNumber5;
+    vector<string> playerHand;
+    vector<string> opponentHand;
+    vector<string> deck;
+    playerHand.resize(5);
+    opponentHand.resize(5);
+    deck = createDeck(deck);
+    do
+    {
+    randomNumber1 = rand() % 52;
+    randomNumber2 = rand() % 52;
+    randomNumber3 = rand() % 52;
+    randomNumber4 = rand() % 52;
+    randomNumber5 = rand() % 52;
+    }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber3 == randomNumber4);
 
-for(int index = 0; index < deck.size(); index++)
-{
-cout<<deck[index]<<endl;
-}
+
+
+    cout<<randomNumber1<<endl<<randomNumber2<<endl<<randomNumber3<<endl<<randomNumber4<<endl<<randomNumber5<<endl;
 
 return 0;
 }
 
 
 
+
+
+
+
+
+//Functions
 
 vector<string> createDeck(vector<string> deck)
 {
