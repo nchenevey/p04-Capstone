@@ -23,11 +23,16 @@ Hands:
 10.High card:       If no other play, then highest card in hand
 
 */
-
-vector<string> createDeck(vector<string> deck);
+double round(double);
+vector<string> createDeck(vector<string>);
+double texas(int,int,int,int,int,int, vector<string>);
+vector<int> lowToHigh(vector<int>);
 
 int main()
-{
+{   
+    double playerWallet = 100;
+    double opponentWallet = 100;
+
     srand( time(NULL) );
     int randomNumber1;
     int randomNumber2;
@@ -40,6 +45,7 @@ int main()
     playerHand.resize(5);
     opponentHand.resize(5);
     deck = createDeck(deck);
+
     do
     {
     randomNumber1 = rand() % 52;
@@ -49,9 +55,9 @@ int main()
     randomNumber5 = rand() % 52;
     }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber3 == randomNumber4);
 
+    texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, 0, deck);
+    
 
-
-    cout<<randomNumber1<<endl<<randomNumber2<<endl<<randomNumber3<<endl<<randomNumber4<<endl<<randomNumber5<<endl;
 
 return 0;
 }
@@ -64,6 +70,103 @@ return 0;
 
 
 //Functions
+
+double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> decked)
+{
+string rCheck;
+vector<int> nums;
+nums.push_back(r1);
+nums.push_back(r2);
+nums.push_back(r3);
+nums.push_back(r4);
+nums.push_back(r5);
+nums = lowToHigh(nums);
+
+int e1 = nums[0];
+int e2 = nums[1];
+int e3 = nums[2];
+int e4 = nums[3];
+int e5 = nums[4];
+
+
+string card1 = decked[e1];
+string card2 = decked[e2];
+string card3 = decked[e3];
+string card4 = decked[e4];
+string card5 = decked[e5];
+
+
+cout<<"Your cards:"<<endl<<card1<<" | "<<card2<<" | "<<card3<<" | "<<card4<<" | "<<card5<<endl;
+cout<<"Enter draw to select cards to draw or ready to continue: ";
+cin>>rCheck;
+
+if(rCheck == "ready" || rCheck == "r" || rCheck == "Ready")
+{
+    if((e1 == 0 && e2 == 9 && e3 == 10 && e4 == 11 && e5 == 12) || (e1 == 13 && e2 == 22 && e3 == 23 && e4 == 24 && e5 == 25) || (e1 == 26 && e2 == 35 && e3 == 36 && e4 == 37 && e5 == 38) || (e1 == 39 && e2 == 48 && e3 == 49 && e4 == 50 && e5 == 51))
+    {
+        cout<<"Royal Flush!"<<endl;
+    }
+    else if((e2 == (e1+1) || e2 == (e1+14) || e2 == (e1+28) || e2 == (e1+32) || e2 == (e1+48)) && (e3 == (e2+1) || e3 == (e2+14) || e3 == (e2+28) || e3 == (e2+32) || e3 == (e2+48)) && (e4 == (e3+1) || e4 == (e3+14) || e4 == (e3+28) || e4 == (e3+32) || e4 == (e3+48)) && (e5 == (e4+1) || e5 == (e4+14) || e5 == (e4+28) || e5 == (e4+32) || e5 == (e4+48)))
+    {
+        cout<<"Straight Flush!"<<endl;
+    }
+}
+}
+
+
+
+
+vector<int> lowToHigh(vector<int> v1)
+{
+int c1 = v1[0];
+int c2 = v1[1];
+int c3 = v1[2];
+int c4 = v1[3];
+int c5 = v1[4];
+
+for(int index = 0; index < 20; index++)
+{
+    if( c4 > c5)
+    {
+        int t1 = c5;
+        c5 = c4;
+        c4 = t1;
+    }
+    if( c3 > c4)
+    {
+        int t2 = c4;
+        c4 = c3;
+        c3 = t2;
+    }
+    if( c2 > c3)
+    {
+        int t3 = c3;
+        c3 = c2;
+        c2 = t3;
+    }
+    if( c1 > c2)
+    {
+        int t4 = c2;
+        c2 = c1;
+        c1 = t4;
+    }
+}
+v1[0] = c1;
+v1[1] = c2;
+v1[2] = c3;
+v1[3] = c4;
+v1[4] = c5;
+
+return v1;
+}
+
+
+double round(double square)
+{
+if(square < 0) return ceil(square-0.5);
+return floor(square+0.5);
+}
+
 
 vector<string> createDeck(vector<string> deck)
 {
