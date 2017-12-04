@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 /*
@@ -24,9 +25,20 @@ Hands:
 
 */
 double round(double);
+
 vector<string> createDeck(vector<string>);
+
 double texas(int,int,int,int,int,int, vector<string>);
+
 vector<int> lowToHigh(vector<int>);
+
+int fourOfAKind(vector<int>);
+
+vector<int> reduction(vector<int>);
+
+bool flush(vector<int>);
+
+bool straight(vector<int>);
 
 int main()
 {   
@@ -53,9 +65,10 @@ int main()
     randomNumber3 = rand() % 52;
     randomNumber4 = rand() % 52;
     randomNumber5 = rand() % 52;
-    }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber3 == randomNumber4);
-
+    }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber1 == randomNumber5 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber2 == randomNumber5 || randomNumber3 == randomNumber4 || randomNumber3 == randomNumber5 || randomNumber4 == randomNumber5);
+    
     texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, 0, deck);
+
     
 
 
@@ -88,7 +101,18 @@ int e3 = nums[2];
 int e4 = nums[3];
 int e5 = nums[4];
 
-
+/*
+nums[0] = 1;
+nums[1] = 15;
+nums[2] = 3;
+nums[3] = 4;
+nums[4] = 5;
+e1 = 1;
+e2 = 15;
+e3 = 3;
+e4 = 4;
+e5 = 5;
+*/
 string card1 = decked[e1];
 string card2 = decked[e2];
 string card3 = decked[e3];
@@ -106,14 +130,148 @@ if(rCheck == "ready" || rCheck == "r" || rCheck == "Ready")
     {
         cout<<"Royal Flush!"<<endl;
     }
-    else if((e2 == (e1+1) || e2 == (e1+14) || e2 == (e1+28) || e2 == (e1+32) || e2 == (e1+48)) && (e3 == (e2+1) || e3 == (e2+14) || e3 == (e2+28) || e3 == (e2+32) || e3 == (e2+48)) && (e4 == (e3+1) || e4 == (e3+14) || e4 == (e3+28) || e4 == (e3+32) || e4 == (e3+48)) && (e5 == (e4+1) || e5 == (e4+14) || e5 == (e4+28) || e5 == (e4+32) || e5 == (e4+48)))
+    else if(flush(nums) == true && straight(nums) == true)
     {
         cout<<"Straight Flush!"<<endl;
+    }
+    else if(fourOfAKind(nums) == 4)
+    {
+        cout<<"Four of a kind!"<<endl;
+    }
+    else if(fourOfAKind(nums) == 3)
+    {
+        cout<<"Full house!"<<endl;
+    }
+    else if(flush(nums) == true)
+    {
+        cout<<"Flush!"<<endl;
+    }
+    else if(straight(nums) == true)
+    {
+        cout<<"Straight!"<<endl;
+    }
+    else if(fourOfAKind(nums) == 2)
+    {
+        cout<<"Three of a kind!"<<endl;
+    }
+    else if(fourOfAKind(nums) == 1)
+    {
+        cout<<"Two pair!"<<endl;
+    }
+    else if(fourOfAKind(nums) == 5)
+    {
+        cout<<"Pair!"<<endl;
     }
 }
 }
 
+bool straight(vector<int> kaleidoscope)
+{
+kaleidoscope = reduction(kaleidoscope);
+for(int risk = 1; risk < 5; risk++)
+{
+    kaleidoscope[risk] = kaleidoscope[risk] - risk;
+}
+for(int crisp = 0; crisp < 5; crisp++)
+{
+int spark = count(kaleidoscope.begin(), kaleidoscope.end(), kaleidoscope[crisp]);
+    if(spark == 5)
+    {
+        return true;
+    }
+}
+return false;
+}
 
+
+bool flush(vector<int> octopus)
+{
+int sprint = 0;
+    for(int opal = 0; opal < 5; opal ++)
+    {
+        if(octopus[opal] >= 0 && octopus[opal] < 13)
+        {
+            sprint += 1;
+        }
+        if(octopus[opal] > 12 && octopus[opal] < 26)
+        {
+            sprint += 10;
+        }
+        if(octopus[opal] > 25 && octopus[opal] < 39)
+        {
+            sprint += 100;
+        }
+        if(octopus[opal] > 38 && octopus[opal] < 52)
+        {
+            sprint += 1000;
+        }
+    }
+    if(sprint == 5 || sprint == 50 || sprint == 500 || sprint == 5000)
+    {
+        return true;
+    }
+    return false;
+}
+
+vector<int> reduction(vector<int> orange)
+{
+
+    for(int index = 0; index < 5; index++)
+    {
+        for(int i = 1; i < 4; i++)
+        {
+            if( (orange[index]-13) >= 0 )
+            {
+                
+                orange[index] = (orange[index]-13);
+               
+            }
+        }
+    }
+    return orange;
+}
+
+
+int fourOfAKind(vector<int> rabbit)
+{
+rabbit = reduction(rabbit);
+int tempora = 0;
+int cardCount = 0;
+for(int index = 0; index < 5; index++)
+{
+    cardCount = count(rabbit.begin(), rabbit.end(), rabbit[index] );
+
+    if(cardCount == 4)
+    {
+        return 4;
+    }
+    else if(cardCount == 3)
+    {
+        tempora += 3;
+    }
+    else if(cardCount == 2)
+    {
+        tempora += 2;
+    }
+}
+if(tempora == 13)
+{
+    return 3;
+}
+if(tempora == 9)
+{
+    return 2;
+}
+if(tempora == 8)
+{
+    return 1;
+}
+if(tempora == 4)
+{
+    return 5;
+}
+return 0;
+}
 
 
 vector<int> lowToHigh(vector<int> v1)
