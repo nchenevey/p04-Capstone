@@ -21,7 +21,6 @@ string profile::getUserName()
 
 void profile::increaseCash(double trouble)
 {
-    cash = 5;
     cash += trouble;
 }
 

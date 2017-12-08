@@ -7,7 +7,7 @@
 using namespace std;
 
 
-class player
+class profile
 {
 private:
 
@@ -19,6 +19,7 @@ double cash;
 
 vector<int> hand;
 
+int points;
 
 
 
@@ -31,6 +32,10 @@ string getUserName();
 void increaseCash(double);
 
 double getCash();
+
+void setPoints();
+
+int changePoints(int);
 
 };
 

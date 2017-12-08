@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include "profile.h"
 
 using namespace std;
 /*
@@ -46,9 +47,7 @@ bool straight(vector<int>);
 
 int main()
 {   
-        double playerWallet = 5.00;
-        double opponentWallet = 5.00;
-
+        profile player1;
 
         srand( time(NULL) );
         int randomNumber1;
@@ -63,7 +62,16 @@ int main()
         opponentHand.resize(5);
         deck = createDeck(deck);
 
-
+        string firstName;
+        string lastName;
+        cout<<"Enter full name to create account: ";
+        cin>>firstName>>lastName;
+        player1.increaseCash(5.00);
+        player1.setUserName(firstName,lastName);
+        cout<<"Welcome "<<player1.getUserName()<<". Your current balance is: $"<<player1.getCash()<<endl;
+        
+    do
+    {
         do
         {
                 randomNumber1 = rand() % 52;
@@ -76,11 +84,11 @@ int main()
 
         double gained = texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, 2, deck);
         cout<<"$"<<gained<<" has been deposited into your account."<<endl;
-        playerWallet += gained;
-        cout<<"Current account balance: "<<playerWallet<<endl;
+        player1.increaseCash(gained);
+        cout<<"Current account balance: $"<<player1.getCash()<<endl;
 
 
-
+    }while(
         return 0;
 }
 
