@@ -55,6 +55,7 @@ int main()
         int randomNumber3;
         int randomNumber4;
         int randomNumber5;
+        int health = 20;
         vector<string> playerHand;
         vector<string> opponentHand;
         vector<string> deck;
@@ -87,8 +88,9 @@ int main()
         player1.increaseCash(gained);
         cout<<"Current account balance: $"<<player1.getCash()<<endl;
 
-
-    }while(
+    cout<<"Current health: "<<health<<endl;
+    health += -1;
+    }while(health > 0);
         return 0;
 }
 

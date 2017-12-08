@@ -33,10 +33,6 @@ void increaseCash(double);
 
 double getCash();
 
-void setPoints(int);
-
-int getPoints();
-
 };
 
 #endif
