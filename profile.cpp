@@ -29,3 +29,13 @@ double profile::getCash()
     if(cash < 0) return ceil(cash-0.5);
     return floor(cash+0.5);
 }
+
+void profile::setPoints(int flux)
+{
+    points += flux;
+}
+
+int profile::getPoints()
+{
+    return points;
+}

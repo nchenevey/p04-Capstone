@@ -33,9 +33,9 @@ void increaseCash(double);
 
 double getCash();
 
-void setPoints();
+void setPoints(int);
 
-int changePoints(int);
+int getPoints();
 
 };
 
