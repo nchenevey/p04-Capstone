@@ -77,7 +77,7 @@ int main()
         cin>>firstName>>lastName;
         player1.increaseCash(5.00);
         player1.setUserName(firstName,lastName);
-        cout<<"Welcome "<<player1.getUserName()<<". Your current balance is: $"<<player1.getCash()<<endl;
+        cout<<"Welcome to Poker Siege, "<<player1.getUserName()<<"! Your current balance is: $"<<player1.getCash()<<endl;
         
     do
     {
@@ -97,9 +97,15 @@ int main()
         cout<<"Current account balance: $"<<player1.getCash()<<endl;
         
         battlefield = action(battlefield, player1, drawNumber, health);
-
-        cout<<"Only "<<health<<" remaining!"<<endl;
         
+        if(health <= 0)
+        {
+            cout<<"No health remaining!"<<endl;
+        }
+        else
+        {
+            cout<<health<<" health remaining!"<<endl;
+        }
 
     
     }while(health > 0);
@@ -156,7 +162,7 @@ vector< vector <char> > action(vector< vector <char> > cat, profile& player1, in
 
     do
     {
-        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"(4) Quit"<<endl;
+        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"(4) End Turn"<<endl;
         
         cin>>magma;
         if(magma < 5 && magma > 0)
