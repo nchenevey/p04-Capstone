@@ -2,6 +2,7 @@
 #define _PLAYER_H_
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -10,7 +11,9 @@ class player
 {
 private:
 
-string account;
+string accountFirst;
+
+string accountLast;
 
 double cash;
 
@@ -21,7 +24,7 @@ vector<int> hand;
 
 public:
 
-void setUserName(string);
+void setUserName(string,string);
 
 string getUserName();
 
