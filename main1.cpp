@@ -26,6 +26,7 @@ Hands:
 
  */
 
+vector< vector <char> > action(vector< vector <char> >, profile&, int&, int&);
 
 double handCheck(int, int, int, int, int, vector<int>, vector<string>);
 
@@ -45,6 +46,8 @@ bool flush(vector<int>);
 
 bool straight(vector<int>);
 
+vector< vector <char> > createBattlefield(vector< vector <char> >);
+
 int main()
 {   
         profile player1;
@@ -56,12 +59,17 @@ int main()
         int randomNumber4;
         int randomNumber5;
         int health = 20;
+        int drawNumber = 0;
+
         vector<string> playerHand;
         vector<string> opponentHand;
         vector<string> deck;
         playerHand.resize(5);
         opponentHand.resize(5);
         deck = createDeck(deck);
+        
+        vector< vector <char> > battlefield;
+        battlefield = createBattlefield(battlefield);
 
         string firstName;
         string lastName;
@@ -82,21 +90,216 @@ int main()
                 randomNumber5 = rand() % 52;
         }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber1 == randomNumber5 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber2 == randomNumber5 || randomNumber3 == randomNumber4 || randomNumber3 == randomNumber5 || randomNumber4 == randomNumber5);
 
-
-        double gained = texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, 2, deck);
+        double gained = texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, drawNumber, deck);
+   
         cout<<"$"<<gained<<" has been deposited into your account."<<endl;
         player1.increaseCash(gained);
         cout<<"Current account balance: $"<<player1.getCash()<<endl;
+        
+        battlefield = action(battlefield, player1, drawNumber, health);
 
-    cout<<"Current health: "<<health<<endl;
-    health += -1;
+        cout<<"Only "<<health<<" remaining!"<<endl;
+        
+
+    
     }while(health > 0);
+    cout<<"Congratulations "<<player1.getUserName()<<"! Victory is yours!"<<endl;
         return 0;
 }
 
 
 
 //Functions
+vector< vector <char> > action(vector< vector <char> > cat, profile& player1, int& drawNumber, int& health)
+{
+    int magma = 0;
+    int laneNumber = 0;
+    for(int neko = 0; neko < cat.size(); neko++)
+    {
+        for(int inu = 0; inu < cat[0].size(); inu++)
+        {
+                cout<<cat[neko][inu];
+                if(cat[neko][inu] == 'K' && neko < 2)
+                {
+                    cat[0][inu] = 'K';
+                    cat[1][inu] = 'K';
+                }
+                if(cat[neko][inu] == 'K' && neko > 1)
+                {
+                    cat[(neko-2)][inu] = 'K';
+                    cat[neko][inu] = ' ';
+                }
+                if(cat[neko][inu] == 'W' && neko < 1)
+                {
+                    cat[0][inu] = 'W';
+                }
+                if(cat[neko][inu] == 'W' && neko > 0)
+                {
+                    cat[(neko-1)][inu] = 'W';
+                    cat[neko][inu] = ' ';
+                }
+                if(cat[0][inu] == 'K' && cat[1][inu] == 'K')
+                {
+                    health += (-2);
+                    cat[0][inu] = ' ';
+                    cat[1][inu] = ' ';
+                }
+                if(cat[0][inu] == 'W')
+                {
+                    health += (-1);
+                    cat[0][inu] = ' ';
+                }
+
+        }
+        cout<<endl;
+    } 
+
+    do
+    {
+        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"(4) Quit"<<endl;
+        
+        cin>>magma;
+        if(magma < 5 && magma > 0)
+        {
+            if(magma == 1 && player1.getCash() >= 15)
+            {
+                drawNumber++;
+                player1.increaseCash(-15);
+                cout<<"Draw count increased by 1! $15 has been withdrawn from your account. Current balance: $"<<player1.getCash()<<endl;
+            }
+            else if( magma == 2 && player1.getCash() >= 50 && ( (cat[9][1] == ' ' && cat[8][1] == ' ') || (cat[9][3] == ' ' && cat[8][3] == ' ') || (cat[9][5] == ' ' && cat[8][5] == ' ') || (cat[9][7] == ' ' && cat[8][7] == ' ') ) ) 
+            {
+                player1.increaseCash(-50);
+                cout<<"Purchased a Knight! $50 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
+                do
+                {
+                    cout<<"In which lane would you like to place the Knight? (1-4): ";
+                    cin>>laneNumber;
+                    if(laneNumber > 0 && laneNumber < 5)
+                    {
+                        if(laneNumber == 1 && cat[9][1] != 'K' && cat[8][1] != 'K' && cat[9][1] != 'W' && cat[8][1] != 'W')
+                        {
+                            cat[9][1] = 'K';
+                            cat[8][1] = 'K';
+                            break;
+                        }
+                        if(laneNumber == 2 && cat[9][3] != 'K' && cat[8][3] != 'K' && cat[9][3] != 'W' && cat[8][3] != 'W')
+                        {
+                            cat[9][3] = 'K';
+                            cat[8][3] = 'K';
+                            break;
+                        }
+                        if(laneNumber == 3 && cat[9][5] != 'K' && cat[8][5] != 'K' && cat[9][5] != 'W' && cat[8][5] != 'W')
+                        {
+                            cat[9][5] = 'K';
+                            cat[8][5] = 'K';
+                            break;
+                        }
+                        if(laneNumber == 4 && cat[9][7] != 'K' && cat[8][7] != 'K' && cat[9][7] != 'W' && cat[8][7] != 'W')
+                        {
+                            cat[9][7] = 'K';
+                            cat[8][7] = 'K';
+                            break;
+                        }
+                        else
+                        {
+                            cout<<"Invalid position, space may already be occupied."<<endl;
+                        }
+                    }
+                    else
+                    {
+                        cout<<"Please select a valid lane number. (1-4)"<<endl;
+                    }
+                }while(true);
+
+            }
+            else if(magma == 3 && player1.getCash() >= 20 && ( cat[9][1] == ' ' || cat[9][3] == ' ' || cat[9][5] == ' ' || cat[9][7] == ' ') )
+            {
+                player1.increaseCash(-20);
+                cout<<"Purchased a Warrior! $20 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
+                do
+                {
+                    cout<<"In which lane would you like to place the Warrior? (1-4): ";
+                    cin>>laneNumber;
+                    if(laneNumber > 0 && laneNumber < 5)
+                    {
+                        if(laneNumber == 1 && cat[9][1] != 'K' && cat[9][1] != 'W')
+                        {
+                            cat[9][1] = 'W';
+                            break;
+                        }
+                        if(laneNumber == 2 && cat[9][3] != 'K' && cat[9][3] != 'W')
+                        {
+                            cat[9][3] = 'W';
+                            break;
+                        }
+                        if(laneNumber == 3 && cat[9][5] != 'K' && cat[9][5] != 'W')
+                        {
+                            cat[9][5] = 'W';
+                            break;
+                        }
+                        if(laneNumber == 4 && cat[9][7] != 'K' && cat[9][7] != 'W')
+                        {
+                            cat[9][7] = 'W';
+                            break;
+                        }
+                        else
+                        {
+                            cout<<"Invalid position, space may already be occupied."<<endl;
+                        }
+                    }
+                    else
+                    {
+                        cout<<"Please select a valid lane number. (1-4)"<<endl;
+                    }
+                }while(true);
+            }
+            else if((magma == 1 && player1.getCash() < 15) || (magma == 2 && player1.getCash() < 50) || (magma == 3 && player1.getCash() < 20))
+            {
+                cout<<"Not enough funds. ($"<<player1.getCash()<<")"<<endl;
+            }
+            else if(magma == 4)
+            {
+                break;
+            }   
+            else
+            {
+                cout<<"No valid position to place this unit."<<endl;
+            }
+
+        }
+        else
+        {
+            cout<<"Please select a number between 1 and 4."<<endl;
+        }
+    }while(magma != 4);
+
+   return cat;
+}
+
+
+vector< vector <char> > createBattlefield(vector< vector <char> > landscape)
+{
+    for(int sky = 0; sky < 10; sky++)
+    {
+        landscape.resize(10);
+        for(int stars = 0; stars < 9; stars++)
+        {
+            landscape[sky].resize(9);
+            if(stars == 0 || stars == 2 || stars == 4 || stars == 6 || stars == 8)
+            {
+                landscape[sky][stars] = '|';
+            }
+            else
+            {
+                landscape[sky][stars] = ' ';
+            }
+            
+        }
+        
+    }
+return landscape;
+}
 
 int randomDeckDraw(vector<int> randomNumbers, int changed)
 {
@@ -190,6 +393,11 @@ double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> d
                     }
                     }while(cardDraw > 5 || cardDraw < 1);
                 }
+                else
+                {
+                    break;
+                }
+         
             }
             else
             {
