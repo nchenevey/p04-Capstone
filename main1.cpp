@@ -25,7 +25,7 @@ Hands:
 8. Two pair:        Two different pairs
 9. Pair:            Two cards of the same rank
 10.High card:       If no other play, then highest card in hand
-*/
+ */
 
 //Action function lets you place units on the 'battlefield' matrix lanes
 vector< vector <char> > action(vector< vector <char> >, profile&, int&, int&);
@@ -90,42 +90,42 @@ int main()
         player1.increaseCash(5.00);
         player1.setUserName(firstName,lastName);
         cout<<"Welcome to Poker Siege, "<<player1.getUserName()<<"! Your current balance is: $"<<player1.getCash()<<endl;
-        
-    do
-    {
+
         do
         {
-                randomNumber1 = rand() % 52;
-                randomNumber2 = rand() % 52;
-                randomNumber3 = rand() % 52;
-                randomNumber4 = rand() % 52;
-                randomNumber5 = rand() % 52;
-        }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber1 == randomNumber5 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber2 == randomNumber5 || randomNumber3 == randomNumber4 || randomNumber3 == randomNumber5 || randomNumber4 == randomNumber5);
+                do
+                {
+                        randomNumber1 = rand() % 52;
+                        randomNumber2 = rand() % 52;
+                        randomNumber3 = rand() % 52;
+                        randomNumber4 = rand() % 52;
+                        randomNumber5 = rand() % 52;
+                }while(randomNumber1 == randomNumber2 || randomNumber1 == randomNumber3 || randomNumber1 == randomNumber4 || randomNumber1 == randomNumber5 || randomNumber2 == randomNumber3 || randomNumber2 == randomNumber4 || randomNumber2 == randomNumber5 || randomNumber3 == randomNumber4 || randomNumber3 == randomNumber5 || randomNumber4 == randomNumber5);
 
-        double gained = texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, drawNumber, deck);
-   
-        cout<<"$"<<gained<<" has been deposited into your account."<<endl;
-        player1.increaseCash(gained);
-        cout<<"Current account balance: $"<<player1.getCash()<<endl;
-        
-        battlefield = action(battlefield, player1, drawNumber, health);
-        
-        if(health <= 0)
-        {
-            cout<<"No health remaining!"<<endl;
-            cout<<"Congratulations "<<player1.getUserName()<<"! Victory is yours!"<<endl;
-            return 0;
-        }
-        else if( turnTimer == 0)
-        {
-            cout<<"Missions failed, we'll get 'em next time."<<endl;
-            return 0;
-        }
-        turnTimer = (turnTimer-1);
-        cout<<turnTimer<<" turns remaining."<<endl;
-        
-    }while(health > 0);
-    
+                double gained = texas(randomNumber1, randomNumber2, randomNumber3, randomNumber4, randomNumber5, drawNumber, deck);
+
+                cout<<"$"<<gained<<" has been deposited into your account."<<endl;
+                player1.increaseCash(gained);
+                cout<<"Current account balance: $"<<player1.getCash()<<endl;
+
+                battlefield = action(battlefield, player1, drawNumber, health);
+
+                if(health <= 0)
+                {
+                        cout<<"No health remaining!"<<endl;
+                        cout<<"Congratulations "<<player1.getUserName()<<"! Victory is yours!"<<endl;
+                        return 0;
+                }
+                else if( turnTimer == 0)
+                {
+                        cout<<"Missions failed, we'll get 'em next time."<<endl;
+                        return 0;
+                }
+                turnTimer = (turnTimer-1);
+                cout<<turnTimer<<" turns remaining."<<endl;
+
+        }while(health > 0);
+
         return 0;
 }
 
@@ -136,220 +136,217 @@ int main()
 //Action Function
 vector< vector <char> > action(vector< vector <char> > cat, profile& player1, int& drawNumber, int& health)
 {   
-    ifstream file;
-    string line;
+        ifstream file;
+        string line;
 
-    int tempHealth = health;
-    int magma = 0;
-    int laneNumber = 0;
-    for(int neko = 0; neko < cat.size(); neko++)
-    {
-        for(int inu = 0; inu < cat[0].size(); inu++)
+        int tempHealth = health;
+        int magma = 0;
+        int laneNumber = 0;
+        for(int neko = 0; neko < cat.size(); neko++)
         {
-                cout<<cat[neko][inu];
-                if(cat[neko][inu] == 'K' && neko < 2)
+                for(int inu = 0; inu < cat[0].size(); inu++)
                 {
-                    cat[0][inu] = 'K';
-                    cat[1][inu] = 'K';
-                }
-                if(cat[neko][inu] == 'K' && neko > 1)
-                {
-                    cat[(neko-2)][inu] = 'K';
-                    cat[neko][inu] = ' ';
-                }
-                if(cat[neko][inu] == 'W' && neko < 1)
-                {
-                    cat[0][inu] = 'W';
-                }
-                if(cat[neko][inu] == 'W' && neko > 0)
-                {
-                    cat[(neko-1)][inu] = 'W';
-                    cat[neko][inu] = ' ';
-                }
-                if(cat[0][inu] == 'K' && cat[1][inu] == 'K')
-                {
-                    health += (-2);
-                    cat[0][inu] = ' ';
-                    cat[1][inu] = ' ';
-                }
-                if(cat[0][inu] == 'W')
-                {
-                    health += (-1);
-                    cat[0][inu] = ' ';
-                }
+                        cout<<cat[neko][inu];
+                        if(cat[neko][inu] == 'K' && neko < 2)
+                        {
+                                cat[0][inu] = 'K';
+                                cat[1][inu] = 'K';
+                        }
+                        if(cat[neko][inu] == 'K' && neko > 1)
+                        {
+                                cat[(neko-2)][inu] = 'K';
+                                cat[neko][inu] = ' ';
+                        }
+                        if(cat[neko][inu] == 'W' && neko < 1)
+                        {
+                                cat[0][inu] = 'W';
+                        }
+                        if(cat[neko][inu] == 'W' && neko > 0)
+                        {
+                                cat[(neko-1)][inu] = 'W';
+                                cat[neko][inu] = ' ';
+                        }
+                        if(cat[0][inu] == 'K' && cat[1][inu] == 'K')
+                        {
+                                health += (-2);
+                                cat[0][inu] = ' ';
+                                cat[1][inu] = ' ';
+                        }
+                        if(cat[0][inu] == 'W')
+                        {
+                                health += (-1);
+                                cat[0][inu] = ' ';
+                        }
 
-        }
-        cout<<endl;
-    } 
+                }
+                cout<<endl;
+        } 
 
-    do
-    {
-        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"Or"<<endl<<"(4) End Turn"<<endl<<"(5) Help"<<endl;
-        
-        cin>>magma;
-        if(magma <= 5 && magma > 0)
+        do
         {
-            if(magma == 1 && player1.getCash() >= 15)
+                cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"Or"<<endl<<"(4) End Turn"<<endl<<"(5) Help"<<endl;
+
+            cin>>magma;
+            if(magma <= 5 && magma > 0)
             {
-                drawNumber++;
-                player1.increaseCash(-15);
-                cout<<"Draw count increased by 1! $15 has been withdrawn from your account. Current balance: $"<<player1.getCash()<<endl;
-            }
-            else if( magma == 2 && player1.getCash() >= 50 && ( (cat[9][1] == ' ' && cat[8][1] == ' ') || (cat[9][3] == ' ' && cat[8][3] == ' ') || (cat[9][5] == ' ' && cat[8][5] == ' ') || (cat[9][7] == ' ' && cat[8][7] == ' ') ) ) 
-            {
-                player1.increaseCash(-50);
-                cout<<"Purchased a Knight! $50 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
-                do
-                {
-                    cout<<"In which lane would you like to place the Knight? (1-4): ";
-                    cin>>laneNumber;
-                    if(laneNumber > 0 && laneNumber < 5)
+                    if(magma == 1 && player1.getCash() >= 15)
                     {
-                        if(laneNumber == 1 && cat[9][1] != 'K' && cat[8][1] != 'K' && cat[9][1] != 'W' && cat[8][1] != 'W')
-                        {
-                            cat[9][1] = 'K';
-                            cat[8][1] = 'K';
+                            drawNumber++;
+                            player1.increaseCash(-15);
+                            cout<<"Draw count increased by 1! $15 has been withdrawn from your account. Current balance: $"<<player1.getCash()<<endl;
+                    }
+                    else if( magma == 2 && player1.getCash() >= 50 && ( (cat[9][1] == ' ' && cat[8][1] == ' ') || (cat[9][3] == ' ' && cat[8][3] == ' ') || (cat[9][5] == ' ' && cat[8][5] == ' ') || (cat[9][7] == ' ' && cat[8][7] == ' ') ) ) 
+                    {
+                            player1.increaseCash(-50);
+                            cout<<"Purchased a Knight! $50 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
+                            do
+                            {
+                                    cout<<"In which lane would you like to place the Knight? (1-4): ";
+                                    cin>>laneNumber;
+                                    if(laneNumber > 0 && laneNumber < 5)
+                                    {
+                                            if(laneNumber == 1 && cat[9][1] != 'K' && cat[8][1] != 'K' && cat[9][1] != 'W' && cat[8][1] != 'W')
+                                            {
+                                                    cat[9][1] = 'K';
+                                                    cat[8][1] = 'K';
+                                                    break;
+                                            }
+                                            if(laneNumber == 2 && cat[9][3] != 'K' && cat[8][3] != 'K' && cat[9][3] != 'W' && cat[8][3] != 'W')
+                                            {
+                                                    cat[9][3] = 'K';
+                                                    cat[8][3] = 'K';
+                                                    break;
+                                            }
+                                            if(laneNumber == 3 && cat[9][5] != 'K' && cat[8][5] != 'K' && cat[9][5] != 'W' && cat[8][5] != 'W')
+                                            {
+                                                    cat[9][5] = 'K';
+                                                    cat[8][5] = 'K';
+                                                    break;
+                                            }
+                                            if(laneNumber == 4 && cat[9][7] != 'K' && cat[8][7] != 'K' && cat[9][7] != 'W' && cat[8][7] != 'W')
+                                            {
+                                                    cat[9][7] = 'K';
+                                                    cat[8][7] = 'K';
+                                                    break;
+                                            }
+                                            else
+                                            {
+                                                    cout<<"Invalid position, space may already be occupied."<<endl;
+                                            }
+                                    }
+                                    else
+                                    {
+                                            cout<<"Please select a valid lane number. (1-4)"<<endl;
+                                    }
+                            }while(true);
+                    }
+                    else if(magma == 3 && player1.getCash() >= 20 && ( cat[9][1] == ' ' || cat[9][3] == ' ' || cat[9][5] == ' ' || cat[9][7] == ' ') )
+                    {
+                            player1.increaseCash(-20);
+                            cout<<"Purchased a Warrior! $20 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
+                            do
+                            {
+                                    cout<<"In which lane would you like to place the Warrior? (1-4): ";
+                                    cin>>laneNumber;
+                                    if(laneNumber > 0 && laneNumber < 5)
+                                    {
+                                            if(laneNumber == 1 && cat[9][1] != 'K' && cat[9][1] != 'W')
+                                            {
+                                                    cat[9][1] = 'W';
+                                                    break;
+                                            }
+                                            if(laneNumber == 2 && cat[9][3] != 'K' && cat[9][3] != 'W')
+                                            {
+                                                    cat[9][3] = 'W';
+                                                    break;
+                                            }
+                                            if(laneNumber == 3 && cat[9][5] != 'K' && cat[9][5] != 'W')
+                                            {
+                                                    cat[9][5] = 'W';
+                                                    break;
+                                            }
+                                            if(laneNumber == 4 && cat[9][7] != 'K' && cat[9][7] != 'W')
+                                            {
+                                                    cat[9][7] = 'W';
+                                                    break;
+                                            }
+                                            else
+                                            {
+                                                    cout<<"Invalid position, space may already be occupied."<<endl;
+                                            }
+                                    }
+                                    else
+                                    {
+                                            cout<<"Please select a valid lane number. (1-4)"<<endl;
+                                    }
+                            }while(true);
+                    }
+                    else if((magma == 1 && player1.getCash() < 15) || (magma == 2 && player1.getCash() < 50) || (magma == 3 && player1.getCash() < 20))
+                    {
+                            cout<<"Not enough funds. ($"<<player1.getCash()<<")"<<endl;
+                    }
+                    else if(magma == 4)
+                    {
                             break;
-                        }
-                        if(laneNumber == 2 && cat[9][3] != 'K' && cat[8][3] != 'K' && cat[9][3] != 'W' && cat[8][3] != 'W')
-                        {
-                            cat[9][3] = 'K';
-                            cat[8][3] = 'K';
-                            break;
-                        }
-                        if(laneNumber == 3 && cat[9][5] != 'K' && cat[8][5] != 'K' && cat[9][5] != 'W' && cat[8][5] != 'W')
-                        {
-                            cat[9][5] = 'K';
-                            cat[8][5] = 'K';
-                            break;
-                        }
-                        if(laneNumber == 4 && cat[9][7] != 'K' && cat[8][7] != 'K' && cat[9][7] != 'W' && cat[8][7] != 'W')
-                        {
-                            cat[9][7] = 'K';
-                            cat[8][7] = 'K';
-                            break;
-                        }
-                        else
-                        {
-                            cout<<"Invalid position, space may already be occupied."<<endl;
-                        }
+                    } 
+                    else if(magma == 5)
+                    {   
+                            vector<string> helpFile;
+                            helpFile.resize(15);
+                            int doggo = 0;
+                            file.open("help.txt");
+                            while(getline(file, line))
+                            {
+                                    helpFile[doggo] = line;
+                                    doggo++;
+                            }
+                            for(int lulz = 0; lulz < helpFile.size(); lulz++)
+                            {
+                                    cout<<helpFile[lulz]<<endl;
+                            }
+
                     }
                     else
                     {
-                        cout<<"Please select a valid lane number. (1-4)"<<endl;
+                            cout<<"No valid position to place this unit."<<endl;
                     }
-                }while(true);
-
-            }
-            else if(magma == 3 && player1.getCash() >= 20 && ( cat[9][1] == ' ' || cat[9][3] == ' ' || cat[9][5] == ' ' || cat[9][7] == ' ') )
-            {
-                player1.increaseCash(-20);
-                cout<<"Purchased a Warrior! $20 has been withdrawn from your account. Current balance : $"<<player1.getCash()<<endl;
-                do
-                {
-                    cout<<"In which lane would you like to place the Warrior? (1-4): ";
-                    cin>>laneNumber;
-                    if(laneNumber > 0 && laneNumber < 5)
-                    {
-                        if(laneNumber == 1 && cat[9][1] != 'K' && cat[9][1] != 'W')
-                        {
-                            cat[9][1] = 'W';
-                            break;
-                        }
-                        if(laneNumber == 2 && cat[9][3] != 'K' && cat[9][3] != 'W')
-                        {
-                            cat[9][3] = 'W';
-                            break;
-                        }
-                        if(laneNumber == 3 && cat[9][5] != 'K' && cat[9][5] != 'W')
-                        {
-                            cat[9][5] = 'W';
-                            break;
-                        }
-                        if(laneNumber == 4 && cat[9][7] != 'K' && cat[9][7] != 'W')
-                        {
-                            cat[9][7] = 'W';
-                            break;
-                        }
-                        else
-                        {
-                            cout<<"Invalid position, space may already be occupied."<<endl;
-                        }
-                    }
-                    else
-                    {
-                        cout<<"Please select a valid lane number. (1-4)"<<endl;
-                    }
-                }while(true);
-            }
-            else if((magma == 1 && player1.getCash() < 15) || (magma == 2 && player1.getCash() < 50) || (magma == 3 && player1.getCash() < 20))
-            {
-                cout<<"Not enough funds. ($"<<player1.getCash()<<")"<<endl;
-            }
-            else if(magma == 4)
-            {
-                break;
-            } 
-            else if(magma == 5)
-            {   
-                vector<string> helpFile;
-                helpFile.resize(15);
-                int doggo = 0;
-                file.open("help.txt");
-                
-                while(getline(file, line))
-                {
-                    helpFile[doggo] = line;
-                    doggo++;
-                }
-                for(int lulz = 0; lulz < helpFile.size(); lulz++)
-                {
-                    cout<<helpFile[lulz]<<endl;
-                }
-
             }
             else
             {
-                cout<<"No valid position to place this unit."<<endl;
+                    cout<<"Please select a number between 1 and 4."<<endl;
             }
-
-        }
-        else
-        {
-            cout<<"Please select a number between 1 and 4."<<endl;
-        }
     }while(magma != 4);
-
+ 
     if(tempHealth > health && health > 0)
     {
-        cout<<"Opposition health reduced to "<<health<<"!"<<endl;
+            cout<<"Opposition health reduced to "<<health<<"!"<<endl;
     }
 
-   return cat;
+    return cat;
 }
 
 //CreateBattleField Function
 vector< vector <char> > createBattlefield(vector< vector <char> > landscape)
 {
-    for(int sky = 0; sky < 10; sky++)
-    {
-        landscape.resize(10);
-        for(int stars = 0; stars < 9; stars++)
+        for(int sky = 0; sky < 10; sky++)
         {
-            landscape[sky].resize(9);
-            if(stars == 0 || stars == 2 || stars == 4 || stars == 6 || stars == 8)
-            {
-                landscape[sky][stars] = '|';
-            }
-            else
-            {
-                landscape[sky][stars] = ' ';
-            }
-            
+                landscape.resize(10);
+                for(int stars = 0; stars < 9; stars++)
+                {
+                        landscape[sky].resize(9);
+                        if(stars == 0 || stars == 2 || stars == 4 || stars == 6 || stars == 8)
+                        {
+                                landscape[sky][stars] = '|';
+                        }
+                        else
+                        {
+                                landscape[sky][stars] = ' ';
+                        }
+
+                }
+
         }
-        
-    }
-return landscape;
+        return landscape;
 }
 
 //RandomDeckDraw Function
@@ -362,14 +359,14 @@ int randomDeckDraw(vector<int> randomNumbers, int changed)
         int randomNumber4 = randomNumbers[3];
         int randomNumber5 = randomNumbers[4];
         int y = (changed-1);
-        
+
         do
         {
                 randomNumbers[y] = rand() % 52;
 
         }while(randomNumbers[y] == randomNumber2 || randomNumbers[y] == randomNumber3 || randomNumbers[y] == randomNumber4 || randomNumbers[y] == randomNumber5);
-int jade = randomNumbers[y];
-return jade;
+        int jade = randomNumbers[y];
+        return jade;
 
 }
 
@@ -385,7 +382,7 @@ double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> d
         nums.push_back(r3);
         nums.push_back(r4);
         nums.push_back(r5);
-        
+
         nums = lowToHigh(nums);
         int e1 = nums[0];
         int e2 = nums[1];
@@ -401,53 +398,53 @@ double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> d
 
         do
         {   
-            e1 = nums[0];
-            e2 = nums[1];
-            e3 = nums[2];
-            e4 = nums[3];
-            e5 = nums[4];
-            card1 = decked[e1];
-            card2 = decked[e2];
-            card3 = decked[e3];
-            card4 = decked[e4];
-            card5 = decked[e5];
+                e1 = nums[0];
+                e2 = nums[1];
+                e3 = nums[2];
+                e4 = nums[3];
+                e5 = nums[4];
+                card1 = decked[e1];
+                card2 = decked[e2];
+                card3 = decked[e3];
+                card4 = decked[e4];
+                card5 = decked[e5];
 
-            cout<<"Your cards:"<<endl<<card1<<" | "<<card2<<" | "<<card3<<" | "<<card4<<" | "<<card5<<endl;
-            if(draws > 0)
-            {   
-                cout<<"Enter draw to select an unwanted card to draw or ready to continue: ";
-                cin>>rCheck;
+                cout<<"Your cards:"<<endl<<card1<<" | "<<card2<<" | "<<card3<<" | "<<card4<<" | "<<card5<<endl;
+                if(draws > 0)
+                {   
+                        cout<<"Enter draw to select an unwanted card to draw or ready to continue: ";
+                        cin>>rCheck;
 
-                if(rCheck == "draw" || rCheck == "Draw" || rCheck == "DRAW")
-                {
-                    do
-                    {
-                    cout<<"Please enter the number position of the card you would like to draw(1-5): "; 
-                    cin>>cardDraw;
-                    
-                    
-                    if(cardDraw > 0 && cardDraw <= 5)
-                    {
-                        int amethyst = (cardDraw - 1);
-                        nums[amethyst] = randomDeckDraw(nums, cardDraw);
-                        draws = (draws-1);
-                    }
-                    else
-                    {
-                        cout<<"Invalid card position."<<endl;
-                    }
-                    }while(cardDraw > 5 || cardDraw < 1);
+                        if(rCheck == "draw" || rCheck == "Draw" || rCheck == "DRAW")
+                        {
+                                do
+                                {
+                                        cout<<"Please enter the number position of the card you would like to draw(1-5): "; 
+                                        cin>>cardDraw;
+
+
+                                        if(cardDraw > 0 && cardDraw <= 5)
+                                        {
+                                                int amethyst = (cardDraw - 1);
+                                                nums[amethyst] = randomDeckDraw(nums, cardDraw);
+                                                draws = (draws-1);
+                                        }
+                                        else
+                                        {
+                                                cout<<"Invalid card position."<<endl;
+                                        }
+                                }while(cardDraw > 5 || cardDraw < 1);
+                        }
+                        else
+                        {
+                                break;
+                        }
+
                 }
                 else
                 {
-                    break;
+                        break;
                 }
-         
-            }
-            else
-            {
-                break;
-            }
         }while(rCheck == "draw" || rCheck == "Draw" || rCheck == "DRAW" || draws > 0);
 
         double tripple = handCheck(e1, e2, e3, e4, e5, nums, decked);
