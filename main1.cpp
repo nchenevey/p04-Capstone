@@ -8,10 +8,10 @@
 #include "profile.h"
 
 using namespace std;
+
 /*
    Spades, Hearts, Diamonds, Clubs
    Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King
-
 Hands:
 1. Royal Flush:     A, K, Q, J, 10 all the same suit
 2. Straight flush:  Five cards in a sequence, all the same suit
@@ -23,35 +23,47 @@ Hands:
 8. Two pair:        Two different pairs
 9. Pair:            Two cards of the same rank
 10.High card:       If no other play, then highest card in hand
+*/
 
- */
-
+//Action function lets you place units on the 'battlefield' matrix lanes
 vector< vector <char> > action(vector< vector <char> >, profile&, int&, int&);
 
+//RandomDeckDraw Function provides a random card when draw is selected
+int randomDeckDraw(vector<int>, int);
+
+//HandCheck function checks what hand value the cards can make
 double handCheck(int, int, int, int, int, vector<int>, vector<string>);
 
+//Round function makes sure the money is rounded to two decimals
 double round(double);
 
+//CreateDeck function creates a vector of 52 cards to use
 vector<string> createDeck(vector<string>);
 
+//Texas Function displays the hand and checks the value of the hand
 double texas(int,int,int,int,int,int, vector<string>);
 
+//LowToHigh function organizes card values from low to high
 vector<int> lowToHigh(vector<int>);
 
+//FourOfAKind function checks to see if cards have the same value, checks 4 of a kind, 3 of a kind, two pair, and pair
 int fourOfAKind(vector<int>);
 
+//Reduction function reduces all cards to their basic value between 0-12
 vector<int> reduction(vector<int>);
 
+//Flush Function checks if the cards provided are in the same suit
 bool flush(vector<int>);
 
+//Straight function checks to see if the cards provided are in a sequence
 bool straight(vector<int>);
 
+//CreateBattleField function creates a matrix with 4 lanes
 vector< vector <char> > createBattlefield(vector< vector <char> >);
 
 int main()
 {   
         profile player1;
-
         srand( time(NULL) );
         int randomNumber1;
         int randomNumber2;
@@ -60,17 +72,15 @@ int main()
         int randomNumber5;
         int health = 20;
         int drawNumber = 0;
-
+        int turnTimer = 15;
         vector<string> playerHand;
         vector<string> opponentHand;
         vector<string> deck;
         playerHand.resize(5);
         opponentHand.resize(5);
         deck = createDeck(deck);
-        
         vector< vector <char> > battlefield;
         battlefield = createBattlefield(battlefield);
-
         string firstName;
         string lastName;
         cout<<"Enter full name to create account: ";
@@ -101,23 +111,30 @@ int main()
         if(health <= 0)
         {
             cout<<"No health remaining!"<<endl;
+            cout<<"Congratulations "<<player1.getUserName()<<"! Victory is yours!"<<endl;
+            return 0;
         }
-        else
+        else if( turnTimer == 0)
         {
-            cout<<health<<" health remaining!"<<endl;
+            cout<<"Missions failed, we'll get 'em next time."<<endl;
+            return 0;
         }
-
-    
+        turnTimer = (turnTimer-1);
+        cout<<turnTimer<<" turns remaining."<<endl;
+        
     }while(health > 0);
-    cout<<"Congratulations "<<player1.getUserName()<<"! Victory is yours!"<<endl;
+    
         return 0;
 }
 
 
 
 //Functions
+
+//Action Function
 vector< vector <char> > action(vector< vector <char> > cat, profile& player1, int& drawNumber, int& health)
-{
+{   
+    int tempHealth = health;
     int magma = 0;
     int laneNumber = 0;
     for(int neko = 0; neko < cat.size(); neko++)
@@ -280,10 +297,15 @@ vector< vector <char> > action(vector< vector <char> > cat, profile& player1, in
         }
     }while(magma != 4);
 
+    if(tempHealth > health && health > 0)
+    {
+        cout<<"Opposition health reduced to "<<health<<"!";
+    }
+
    return cat;
 }
 
-
+//CreateBattleField Function
 vector< vector <char> > createBattlefield(vector< vector <char> > landscape)
 {
     for(int sky = 0; sky < 10; sky++)
@@ -307,6 +329,7 @@ vector< vector <char> > createBattlefield(vector< vector <char> > landscape)
 return landscape;
 }
 
+//RandomDeckDraw Function
 int randomDeckDraw(vector<int> randomNumbers, int changed)
 {
         srand( time(NULL) );
@@ -327,7 +350,7 @@ return jade;
 
 }
 
-
+//Texas Function
 double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> decked)
 {
         int cardDraw;
@@ -339,15 +362,8 @@ double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> d
         nums.push_back(r3);
         nums.push_back(r4);
         nums.push_back(r5);
-        /* 
-           nums[0] = 14;
-           nums[1] = 15;
-           nums[2] = 16;
-           nums[3] = 18;
-           nums[4] = 17;
-         */
+        
         nums = lowToHigh(nums);
-
         int e1 = nums[0];
         int e2 = nums[1];
         int e3 = nums[2];
@@ -417,9 +433,10 @@ double texas(int r1, int r2, int r3, int r4, int r5, int draws, vector<string> d
 
 }
 
+//Straight Function
 bool straight(vector<int> kaleidoscope)
 {
-        kaleidoscope = reduction(kaleidoscope);
+        kaleidoscope = lowToHigh(reduction(kaleidoscope));
         for(int risk = 1; risk < 5; risk++)
         {
                 kaleidoscope[risk] = kaleidoscope[risk] - risk;
@@ -435,7 +452,7 @@ bool straight(vector<int> kaleidoscope)
         return false;
 }
 
-
+//Flush Function
 bool flush(vector<int> octopus)
 {
         int sprint = 0;
@@ -483,7 +500,7 @@ vector<int> reduction(vector<int> orange)
         return orange;
 }
 
-
+//FourOfAKind Function
 int fourOfAKind(vector<int> rabbit)
 {
         rabbit = reduction(rabbit);
@@ -525,7 +542,7 @@ int fourOfAKind(vector<int> rabbit)
         return 0;
 }
 
-
+//LowToHigh function
 vector<int> lowToHigh(vector<int> v1)
 {
         int c1 = v1[0];
@@ -570,6 +587,7 @@ vector<int> lowToHigh(vector<int> v1)
         return v1;
 }
 
+//HandCheck Function
 double handCheck(int e1, int e2, int e3, int e4, int e5, vector<int> nums, vector<string> deck)
 {   
         vector<int> tectonics;
@@ -627,14 +645,14 @@ double handCheck(int e1, int e2, int e3, int e4, int e5, vector<int> nums, vecto
         }
 }
 
-
+//Round function
 double round(double square)
 {
         if(square < 0) return ceil(square-0.5);
         return floor(square+0.5);
 }
 
-
+//CreateDeck Function
 vector<string> createDeck(vector<string> deck)
 {
         deck.push_back("Ace of Spades♠");//0
