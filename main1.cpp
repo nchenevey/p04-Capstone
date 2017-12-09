@@ -5,7 +5,9 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 #include "profile.h"
+
 
 using namespace std;
 
@@ -72,7 +74,7 @@ int main()
         int randomNumber5;
         int health = 20;
         int drawNumber = 0;
-        int turnTimer = 15;
+        int turnTimer = 20;
         vector<string> playerHand;
         vector<string> opponentHand;
         vector<string> deck;
@@ -134,6 +136,9 @@ int main()
 //Action Function
 vector< vector <char> > action(vector< vector <char> > cat, profile& player1, int& drawNumber, int& health)
 {   
+    ifstream file;
+    string line;
+
     int tempHealth = health;
     int magma = 0;
     int laneNumber = 0;
@@ -179,10 +184,10 @@ vector< vector <char> > action(vector< vector <char> > cat, profile& player1, in
 
     do
     {
-        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"(4) End Turn"<<endl;
+        cout<<"What would you like to purchase:"<<endl<<"(1) Increase number of draws  $15"<<endl<<"(2) Knight                    $50"<<endl<<"(3) Warrior                   $20"<<endl<<"Or"<<endl<<"(4) End Turn"<<endl<<"(5) Help"<<endl;
         
         cin>>magma;
-        if(magma < 5 && magma > 0)
+        if(magma <= 5 && magma > 0)
         {
             if(magma == 1 && player1.getCash() >= 15)
             {
@@ -284,7 +289,25 @@ vector< vector <char> > action(vector< vector <char> > cat, profile& player1, in
             else if(magma == 4)
             {
                 break;
-            }   
+            } 
+            else if(magma == 5)
+            {   
+                vector<string> helpFile;
+                helpFile.resize(15);
+                int doggo = 0;
+                file.open("help.txt");
+                
+                while(getline(file, line))
+                {
+                    helpFile[doggo] = line;
+                    doggo++;
+                }
+                for(int lulz = 0; lulz < helpFile.size(); lulz++)
+                {
+                    cout<<helpFile[lulz]<<endl;
+                }
+
+            }
             else
             {
                 cout<<"No valid position to place this unit."<<endl;
@@ -299,7 +322,7 @@ vector< vector <char> > action(vector< vector <char> > cat, profile& player1, in
 
     if(tempHealth > health && health > 0)
     {
-        cout<<"Opposition health reduced to "<<health<<"!";
+        cout<<"Opposition health reduced to "<<health<<"!"<<endl;
     }
 
    return cat;

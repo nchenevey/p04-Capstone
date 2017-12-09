@@ -1,0 +1,15 @@
+Welcome to the Poker Siege help file!
+The deck is the same as a standard 52 card deck with 4 suits
+You will start the game with zero draws and $5.
+Since you start out with zero draws you will be assigned a hand and value
+The values per hand are as follows: Royal Flush - $500, Straight Flush - $400,
+Four of a kind - $300, Full House - $200, Flush - $150, Straight - $100, 
+Three of a kind - $50, Two Pair - $25, Pair - $15, High Card - High Card + $5
+Each turn you will have options that you can spend your money on
+You can decide to buy a card draw, which lets you randomize a card in your hand
+You can decide to buy a knight ( movement: 2 and attack: 2 )
+You can decide to buy a warrior ( movement: 1 and attack: 1 )
+Be careful when placing units, knights may trample warriors in their way!
+You may place units in 4 different lanes, when they reach the top they do damage
+The enemy forces have 20 health points, reduce it to zero within 20 turns to win
+Good luck out there!
